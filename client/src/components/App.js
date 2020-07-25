@@ -13,6 +13,11 @@ import VideoUploadPage from "./views/VideoUploadPage/VideoUploadPage";
 //false  logged in user can't go inside
 
 function App() {
+
+    //null 아무나 입장가능
+    //false 로그인못한사람
+    //true 로그인한사람만 가능
+
     return (
         <Suspense fallback={(<div>Loading...</div>)}>
             <NavBar/>
@@ -21,7 +26,7 @@ function App() {
                     <Route exact path="/" component={Auth(LandingPage, null)}/>
                     <Route exact path="/login" component={Auth(LoginPage, false)}/>
                     <Route exact path="/register" component={Auth(RegisterPage, false)}/>
-                    <Route exact path="/register" component={Auth(VideoUploadPage,true)}/>
+                    <Route exact path="/video/upload" component={Auth(VideoUploadPage,true)}/>
 
                 </Switch>
             </div>
