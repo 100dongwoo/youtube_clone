@@ -1,11 +1,47 @@
-import React from "react";
+import React, {useState} from "react";
 import {Typography, Button, Form, message, Input, Icon} from 'antd'
 import Dropzone from "react-dropzone";
 
 const {TextArea} = Input
 const {Title} = Typography;
 
+
+const PrivateOptions = [
+    {value: 0, label: "private"},
+    {value: 1, label: "public"}
+]
+
+const CategoryOption = [
+    {value: 0, label: "Film & Animation"},
+    {value: 1, label: "Autos & Vehciles"},
+    {value: 2, label: "Music"},
+    {value: 3, label: "Pets & Animal"}
+]
+
+
 function VideoUploadPage() {
+
+    const [VideoTitle, setVideostate] = useState("") //reactHook 기능
+    const [Description, setDescription] = useState("")
+    const [Private, setPrivate] = useState((0))
+//private 1 public 0 ..
+    const [Category, setCategory] = useState("Film&Animation")
+
+    const onTitleChange = (e) => {  //onchage설정을안하면 input들에 키보드이벤트 사용이 불가능
+        setVideostate(e.currentTarget.value)
+    }
+
+    const onDescription = (e) => {
+        setDescription(e.currentTarget.values)
+    }
+
+    const onPrivateChange = (e) => {
+        setPrivate(e.currentTarget.value)
+    }
+    const onCategoryChange = (e) => {
+        setCategory(e.currentTarget.value)
+    }
+
     return (
         <div style={{maxWidth: '700px', margin: '2rem auto'}}>
             <div style={{textAlign: 'center', marginBottom: '2rem'}}>
@@ -41,25 +77,38 @@ function VideoUploadPage() {
                 <br/>
                 <label>Title</label>
                 <Input
-                    onChange
-                    value
+                    onChange={onTitleChange}
+                    value={VideoTitle}
                 />
                 <br/>
                 <br/>
                 <label>Description</label>
                 <TextArea
-                    onChange
-                    value/>
+                    onChange={onDescription}
+                    value={Description}
+                />
                 <br/>
                 <br/>
 
-                <select onChange>
-                    <option key value></option>
+                <select onChange={onPrivateChange}>
+                    {PrivateOptions.map((item, index) => (
+                        <option key={index} value={item.value}>
+                            {item.label}</option>))}
+
+                    {/*<option key value></option> map사용으로 없앰}
+                    {/*<option key value></option>*/}
+
+
                 </select>
                 <br/>
                 <br/>
-                <select onChange>
-                    <option key value></option>
+                <select onChange={onCategoryChange}>
+                    {CategoryOption.map((item, index) => (
+                        <option key={index} value={item.value}>
+                            {item.label}
+                        </option>
+                    ))}
+                    {/*<option key value></option>*/}
                 </select>
                 <br/>
                 <br/>
