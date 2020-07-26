@@ -16,6 +16,10 @@ You can watch the tutorial -> Click LINK!
 
 client 에서
 npm install react-dropzone --save 
+
+서버
+npm install multer --save
+
 ###### Project_References : [LINK](https://www.youtube.com/channel/UCFyXA9x8lpL3EYWeYhj4C4Q?view_as=subscriber)
 
 
