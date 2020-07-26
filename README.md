@@ -22,7 +22,7 @@ npm install multer --save
 
 --썸네일 사용하기위해서
 ffmpeg - download
-npm install fluent-ffmpeg
+npm install fluent-ffmpeg --save
 
 ###### Project_References : [LINK](https://www.youtube.com/channel/UCFyXA9x8lpL3EYWeYhj4C4Q?view_as=subscriber)
 

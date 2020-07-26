@@ -28,9 +28,9 @@ function VideoUploadPage() {
 //private 1 public 0 ..
     const [Category, setCategory] = useState("Film&Animation")
 
-//    const [FilePath, setFilePath] = useState("");////////////////////////////////////
-    // const [Duration, setDuration] = useState("");
-    // const [ThunmbnailPath, setThunmbnailPath] = useState("");
+    const [FilePath, setFilePath] = useState("");////////////////////////////////////
+    const [Duration, setDuration] = useState("");
+    const [ThunmbnailPath, setThunmbnailPath] = useState("");
 
 
     const onTitleChange = (e) => {  //onchage설정을안하면 input들에 키보드이벤트 사용이 불가능
@@ -66,16 +66,17 @@ function VideoUploadPage() {
                     }
 
 
-                    //  setFilePath(response.data.url);
+                    setFilePath(response.data.url);
 
 
                     Axios.post('/api/video/thumbnail', variable)
+
                         .then(response => {
                                 if (response.data.success) {
 
                                     console.log((response.data))
-                                    // setDuration(response.data.fileDuration)////
-                                    // setThunmbnailPath(response.data.url)
+                                    setDuration(response.data.fileDuration)////
+                                    setThunmbnailPath(response.data.url)
 
                                     //라우터를 만들어야한다 아래
                                     console.log(response.data)
@@ -122,18 +123,18 @@ function VideoUploadPage() {
 
 
 
+                    {/*썸네일 (Thumnail)*/}
 
-                    {/*/!*썸네일 (Thumnail)*!/*/}
-                    {/*{ThunmbnailPath &&  //있을떄만 랜더링되라는뜻*/}
-                    {/*<div>*/}
-                    {/*    <img src={`http://localhost:5000/${ThunmbnailPath}`} alt="thumbnail"/>*/}
-                    {/*</div>*/}
+                   {ThunmbnailPath &&  //있을떄만 랜더링되라는뜻
+                    <div>
+                        <img src={`http://localhost:5000/${ThunmbnailPath}`} alt="thumbnail"/>
+                    </div>
 
-                    {/*}*/}
+                    }
 
-                    {/*<div>*/}
-                    {/*    <img src alt/>*/}
-                    {/*</div>*/}
+                    <div>
+                        <img src alt/>
+                    </div>
                 </div>
                 <br/>
                 <br/>
