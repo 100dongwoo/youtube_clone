@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-//const { Video } = require("../models/Video");
+const {Video} = require("../models/Video");
 const {auth} = require("../middleware/auth");
 const multer = require("multer")
 
@@ -46,7 +46,7 @@ router.post("/uploadfiles", (req, res) => { //이거만해도됨
 //썸네일관련
 ////
 
-router.post('/thumbnail', (req,res) => { //이거만해도됨
+router.post('/thumbnail', (req, res) => { //이거만해도됨
 //썸네일 생성 비디오 러닝타임 가져옴
     let filePath = ""
     let fileDuration = ""
@@ -61,10 +61,9 @@ router.post('/thumbnail', (req,res) => { //이거만해도됨
     });
 
 
-
     //T썸네일생성성
     ffmpeg(req.body.url)//쿨라이언트에서온 비디오 경로
-         .on('filenames', function (filenames) {  //v파일이름생성
+        .on('filenames', function (filenames) {  //v파일이름생성
             console.log('Will generate ' + filenames.join(', '))
             console.log(filenames)
             filePath = "uploads/thumbnails/" + filenames[0];
@@ -72,7 +71,8 @@ router.post('/thumbnail', (req,res) => { //이거만해도됨
 
         .on('end', function () {  //썸네일생성하고 머할건지
             console.log("screenshot takenn");
-            return res.json({success: true, url: filePath, fileDuration: fileDuration
+            return res.json({
+                success: true, url: filePath, fileDuration: fileDuration
             })
         })
 
@@ -80,7 +80,7 @@ router.post('/thumbnail', (req,res) => { //이거만해도됨
             count: 3,
             folder: 'uploads/thumbnails',   //저장경로
             size: '320*240',
-          //  filename:'thumbnail-%b.png' //b 원래이름익스텐션 뺴고
+            //  filename:'thumbnail-%b.png' //b 원래이름익스텐션 뺴고
         })
 
         .on('error', function (err) {
@@ -89,6 +89,24 @@ router.post('/thumbnail', (req,res) => { //이거만해도됨
 
         })
 });
+
+
+router.post("/uploadVideo", (req, res) => { //이거만해도됨
+
+//비디오 정보들을 저장한다 몽고 db에 저장
+// .
+    const video = new Video(req.body) //클라이언트에서 보낸 모든 정보(유저)req.body에 담긴것
+
+    //video.save()//몽고 db 메소드
+    video.save((err,doc) => {
+        if (err) {
+            return res.json({success:false,err})
+        } else
+            res.status(200).json({success:false})
+
+            })
+
+})
 
 
 module.exports = router;

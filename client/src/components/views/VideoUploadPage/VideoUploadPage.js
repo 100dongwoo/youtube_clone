@@ -3,6 +3,9 @@ import {Typography, Button, Form, message, Input, Icon} from 'antd'
 import Dropzone from "react-dropzone";
 import Axios from "axios";
 
+import {useSelector} from "react-redux"; //react-hook
+
+
 const {TextArea} = Input
 const {Title} = Typography;
 
@@ -20,8 +23,8 @@ const CategoryOption = [
 ]
 
 
-function VideoUploadPage() {
-
+function VideoUploadPage(props) {
+    const user = useSelector(state => state.user) //유저에 모든정보가  contst user에 담긴다
     const [VideoTitle, setVideostate] = useState("") //reactHook 기능
     const [Description, setDescription] = useState("")
     const [Private, setPrivate] = useState((0))
@@ -36,7 +39,6 @@ function VideoUploadPage() {
     const onTitleChange = (e) => {  //onchage설정을안하면 input들에 키보드이벤트 사용이 불가능
         setVideostate(e.currentTarget.value)
     }
-
     const onDescription = (e) => {
         setDescription(e.currentTarget.values)
     }
@@ -92,6 +94,39 @@ function VideoUploadPage() {
             })
     }
 
+
+    const onSubmit = (e) => {
+        e.preventDefault();//클릭하려했던걸들을 방지
+
+        const variables = {
+            writer: user.userData._id,
+            title: VideoTitle,
+            description: Description,
+            privacy: Private,
+            filePath: FilePath,
+            category: Category,
+            duration: Duration,
+            thembnail: ThunmbnailPath
+        }
+
+        Axios.post('/api/video/uploadVideo', variables)
+            .then(response => {  //req보내면 res을 받는다
+                if (response.data.success) {
+
+                    message.success('성공적으로 업로드하였다')
+                    setTimeout(() => {
+
+                    }, 3000)
+                    props.history.push('/')
+
+                } else {
+                    alert("비 디 오 업 로 드 실 패")
+                }
+            })  //이런형식의 axios를하고나선 라우터를 만들어야한다다
+        // 서버 안에있는 라우터
+    }
+
+
     return (
         <div style={{maxWidth: '700px', margin: '2rem auto'}}>
             <div style={{textAlign: 'center', marginBottom: '2rem'}}>
@@ -99,7 +134,7 @@ function VideoUploadPage() {
 
             </div>
 
-            <Form onSubmit>
+            <Form onSubmit={onSubmit}>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     {/*드랍존 (DROP -ZONE)*/}
                     <Dropzone
@@ -122,10 +157,9 @@ function VideoUploadPage() {
                     </Dropzone>
 
 
-
                     {/*썸네일 (Thumnail)*/}
 
-                   {ThunmbnailPath &&  //있을떄만 랜더링되라는뜻
+                    {ThunmbnailPath &&  //있을떄만 랜더링되라는뜻
                     <div>
                         <img src={`http://localhost:5000/${ThunmbnailPath}`} alt="thumbnail"/>
                     </div>
@@ -150,6 +184,7 @@ function VideoUploadPage() {
                     onChange={onDescription}
                     value={Description}
                 />
+
                 <br/>
                 <br/>
 
@@ -175,7 +210,7 @@ function VideoUploadPage() {
                 </select>
                 <br/>
                 <br/>
-                <Button type="primary" size="large" onClick>
+                <Button type="primary" size="large" onClick={onSubmit}>
                     Submit
                 </Button>
             </Form>
