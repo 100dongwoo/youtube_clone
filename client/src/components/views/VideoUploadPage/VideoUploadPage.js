@@ -40,7 +40,7 @@ function VideoUploadPage(props) {
         setVideostate(e.currentTarget.value)
     }
     const onDescription = (e) => {
-        setDescription(e.currentTarget.values)
+        setDescription(e.currentTarget.value)
     }
 
     const onPrivateChange = (e) => {
