@@ -37,8 +37,7 @@ server/routes/video   /////되있는부분
 
 so, We can not see Duration...
 
-
-
+VideoDetailPAGE ERR.... Video 
 
 
 
