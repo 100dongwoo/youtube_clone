@@ -91,7 +91,6 @@ router.post('/thumbnail', (req, res) => { //이거만해도됨
 });
 
 
-
 ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -102,13 +101,25 @@ router.post("/uploadVideo", (req, res) => { //이거만해도됨
     const video = new Video(req.body) //클라이언트에서 보낸 모든 정보(유저)req.body에 담긴것
 
     //video.save()//몽고 db 메소드
-    video.save((err,doc) => {
+    video.save((err, doc) => {
 
-        if (err) return res.json({success:false,err})
-            res.status(200).json({success:true})
+        if (err) return res.json({success: false, err})
+        res.status(200).json({success: true})
 
-            })
+    })
+})
 
+
+//랜딩창에 뜨게하는하는거
+
+router.get('/getVideos', (req, res) => { //이거만해도됨
+    //비디오를 db에서 가져와서 클라이언트에보냄
+    Video.find() //모든비디오를가져옴 db에서
+        .populate('writer')
+        .exec((err, videos) => {
+            if (err) return res.status(400).send(err)
+            res.status(200).json({success: true, videos})
+        })
 })
 
 
