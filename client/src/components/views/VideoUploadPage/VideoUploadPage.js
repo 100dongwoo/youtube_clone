@@ -120,7 +120,7 @@ function VideoUploadPage(props) {
 
                     setTimeout(() => {
                         props.history.push('/')
-                    }, 3000)
+                    }, 1000)
 
 
 

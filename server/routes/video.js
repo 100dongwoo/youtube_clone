@@ -123,4 +123,17 @@ router.get('/getVideos', (req, res) => { //이거만해도됨
 })
 
 
+//랟딩창에서 비디오눌렀을떄 나오게하는게
+
+router.post('/getVideoDetail', (req, res) => { //이거만해도됨
+    Video.findOne({"_id" : req.body.videoId})  //클라이언트에서보낸 id로 db에서 찾겠다는의미
+        .populate('writer') // 비디오 컬렉션에서 user의 모든정보를 가져오겠다는 의미
+        .exec((err, videoDetail) => {  ///
+            if (err) return res.status(400).send(true)
+          return res.status(200).json({success: true, videoDetail})
+        })
+
+})
+
+
 module.exports = router;
