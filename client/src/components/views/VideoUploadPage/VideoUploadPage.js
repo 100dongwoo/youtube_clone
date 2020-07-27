@@ -31,9 +31,9 @@ function VideoUploadPage(props) {
 //private 1 public 0 ..
     const [Category, setCategory] = useState("Film&Animation")
 
-    const [FilePath, setFilePath] = useState("");////////////////////////////////////
-    const [Duration, setDuration] = useState("");
-    const [ThunmbnailPath, setThunmbnailPath] = useState("");
+    // const [FilePath, setFilePath] = useState("");////////////////////////////////////
+    // const [Duration, setDuration] = useState("");
+    // const [ThunmbnailPath, setThunmbnailPath] = useState("");
 
 
     const onTitleChange = (e) => {  //onchage설정을안하면 input들에 키보드이벤트 사용이 불가능
@@ -68,25 +68,25 @@ function VideoUploadPage(props) {
                     }
 
 
-                    setFilePath(response.data.url);
+                  //  setFilePath(response.data.url);
 
-
-                    Axios.post('/api/video/thumbnail', variable)
-
-                        .then(response => {
-                                if (response.data.success) {
-
-                                    console.log((response.data))
-                                    setDuration(response.data.fileDuration)////
-                                    setThunmbnailPath(response.data.url)
-
-                                    //라우터를 만들어야한다 아래
-                                    console.log(response.data)
-                                } else {
-                                    alert("썸네일생성실패")
-                                }
-                            }
-                        )
+//썸네일 에러
+                    // Axios.post('/api/video/thumbnail', variable)
+                    //
+                    //     .then(response => {
+                    //             if (response.data.success) {
+                    //
+                    //                 console.log((response.data))
+                    //                 setDuration(response.data.fileDuration)////
+                    //                 setThunmbnailPath(response.data.url)
+                    //
+                    //                 //라우터를 만들어야한다 아래
+                    //                 console.log(response.data)
+                    //             } else {
+                    //                 alert("썸네일생성실패")
+                    //             }
+                    //         }
+                    //     )
 
 
                 } else
@@ -103,16 +103,15 @@ function VideoUploadPage(props) {
             title: VideoTitle,
             description: Description,
             privacy: Private,
-            filePath: FilePath,
+            // filePath: FilePath,
             category: Category,
-            duration: Duration,
-            thembnail: ThunmbnailPath
+            // duration: Duration,
+            // thembnail: ThunmbnailPath
         }
 
         Axios.post('/api/video/uploadVideo', variables)
             .then(response => {  //req보내면 res을 받는다
                 if (response.data.success) {
-
                     message.success('성공적으로 업로드하였다')
                     setTimeout(() => {
 
@@ -120,6 +119,7 @@ function VideoUploadPage(props) {
                     props.history.push('/')
 
                 } else {
+
                     alert("비 디 오 업 로 드 실 패")
                 }
             })  //이런형식의 axios를하고나선 라우터를 만들어야한다다
@@ -157,14 +157,14 @@ function VideoUploadPage(props) {
                     </Dropzone>
 
 
-                    {/*썸네일 (Thumnail)*/}
+{/*                    /!*썸네일 (Thumnail)*!/*/}
 
-                    {ThunmbnailPath &&  //있을떄만 랜더링되라는뜻
-                    <div>
-                        <img src={`http://localhost:5000/${ThunmbnailPath}`} alt="thumbnail"/>
-                    </div>
+{/*오류있다,,,                    {ThunmbnailPath &&  //있을떄만 랜더링되라는뜻*/}
+{/*                    <div>*/}
+{/*                        <img src={`http://localhost:5000/${ThunmbnailPath}`} alt="thumbnail"/>*/}
+{/*                    </div>*/}
 
-                    }
+{/*                    }*/}
 
                     <div>
                         <img src alt/>
