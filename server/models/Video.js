@@ -16,21 +16,21 @@ const videoSchema = mongoose.Schema({
     privacy: {
         type: Number,
     },
-    // filePath : {
-    //     type: String,
-    // },
+    filePath : {
+        type: String,
+    },
 
     catogory: String,
     views : {
         type: Number,
         default: 0
+    },
+    duration :{
+        type: String
+    },
+    thumbnail: {
+        type: String
     }
-    // duration :{
-    //     type: String
-    // },
-    // thumbnail: {
-    //     type: String
-    // }
 }, { timestamps: true }) //만든날짜와 업데이트한거 됨
 
 

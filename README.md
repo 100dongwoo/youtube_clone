@@ -12,7 +12,17 @@ To use this application,
 4. Type " npm install " inside the client directory ( Download Front-end Dependencies )
 
 
-You can watch the tutorial -> Click LINK!
+
+
+###Error not clear yet
+
+VideoUploadPage  약 70~ //되있는부분
+
+server/routes/video   /////되있는부분 
+
+썸네일관련 error
+
+
 
 client 에서
 npm install react-dropzone --save 
@@ -23,6 +33,10 @@ npm install multer --save
 --썸네일 사용하기위해서
 ffmpeg - download
 npm install fluent-ffmpeg --save
+
+
+
+You can watch the tutorial -> Click LINK!
 
 ###### Project_References : [LINK](https://www.youtube.com/channel/UCFyXA9x8lpL3EYWeYhj4C4Q?view_as=subscriber)
 

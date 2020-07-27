@@ -40,55 +40,59 @@ router.post("/uploadfiles", (req, res) => { //이거만해도됨
         return res.json({success: true, filePath: res.req.file.path, fileName: res.req.file.filename})
     })
 })
+///////////////////////////////////////////////////////////////////////////////
+
+/////
+//썸네일관련 오류
+////
+
+router.post('/thumbnail', (req, res) => { //이거만해도됨
+//썸네일 생성 비디오 러닝타임 가져옴
+    let filePath = ""
+    let fileDuration = ""
 
 
-// /////
-// //썸네일관련 오류
-// ////
-//
-// router.post('/thumbnail', (req, res) => { //이거만해도됨
-// //썸네일 생성 비디오 러닝타임 가져옴
-//     let filePath = ""
-//     let fileDuration = ""
-//
-//
-// //비디오 정보 가져오기
-//
-//     ffmpeg.ffprobe(req.body.url, function (err, metadata) {
-//         console.dir(metadata);
-//         console.log(metadata.format.duration);
-//         fileDuration = metadata.format.duration;
-//     });
-//
-//
-//     //T썸네일생성성
-//     ffmpeg(req.body.url)//쿨라이언트에서온 비디오 경로
-//         .on('filenames', function (filenames) {  //v파일이름생성
-//             console.log('Will generate ' + filenames.join(', '))
-//             console.log(filenames)
-//             filePath = "uploads/thumbnails/" + filenames[0];
-//         })
-//
-//         .on('end', function () {  //썸네일생성하고 머할건지
-//             console.log("screenshot takenn");
-//             return res.json({
-//                 success: true, url: filePath, fileDuration: fileDuration
-//             })
-//         })
-//
-//         .screenshots({   //
-//             count: 3,
-//             folder: 'uploads/thumbnails',   //저장경로
-//             size: '320*240',
-//             //  filename:'thumbnail-%b.png' //b 원래이름익스텐션 뺴고
-//         })
-//
-//         .on('error', function (err) {
-//             console.error(err)
-//             return res.json({success: false, err});
-//
-//         })
-// });
+//비디오 정보 가져오기
+
+    ffmpeg.ffprobe(req.body.url, function (err, metadata) {
+        console.dir(metadata);
+        console.log(metadata.format.duration);
+        fileDuration = metadata.format.duration;
+    });
+
+
+    //T썸네일생성성
+    ffmpeg(req.body.url)//쿨라이언트에서온 비디오 경로
+        .on('filenames', function (filenames) {  //v파일이름생성
+            console.log('Will generate ' + filenames.join(', '))
+            console.log(filenames)
+            filePath = "uploads/thumbnails/" + filenames[0];
+        })
+
+        .on('end', function () {  //썸네일생성하고 머할건지
+            console.log("screenshot takenn");
+            return res.json({
+                success: true, url: filePath, fileDuration: fileDuration
+            })
+        })
+
+        .screenshots({   //
+            count: 3,
+            folder: 'uploads/thumbnails',   //저장경로
+            size: '320*240',
+            //  filename:'thumbnail-%b.png' //b 원래이름익스텐션 뺴고
+        })
+
+        .on('error', function (err) {
+            console.error(err)
+            return res.json({success: false, err});
+
+        })
+});
+
+
+
+///////////////////////////////////////////////////////////////////////////////
 
 
 router.post("/uploadVideo", (req, res) => { //이거만해도됨
@@ -99,6 +103,7 @@ router.post("/uploadVideo", (req, res) => { //이거만해도됨
 
     //video.save()//몽고 db 메소드
     video.save((err,doc) => {
+
         if (err) return res.json({success:false,err})
             res.status(200).json({success:true})
 
