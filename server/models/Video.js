@@ -3,12 +3,12 @@ const Schema = mongoose.Schema;
 
 const videoSchema = mongoose.Schema({
     writer: {
-        type:Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User'
     },
     title: {
-        type:String,
-        maxlength:50,
+        type: String,
+        maxlength: 50,
     },
     description: {
         type: String,
@@ -16,24 +16,26 @@ const videoSchema = mongoose.Schema({
     privacy: {
         type: Number,
     },
-    filePath : {
+    filePath: {
         type: String,
     },
 
-    catogory: String,
-    views : {
+    category: {
+        type: String
+    },
+    views: {
         type: Number,
         default: 0
     },
-    duration :{
+    duration: {
         type: String
     },
     thumbnail: {
         type: String
     }
-}, { timestamps: true }) //만든날짜와 업데이트한거 됨
+}, {timestamps: true}) //만든날짜와 업데이트한거 됨
 
 
 const Video = mongoose.model('Video', videoSchema);
 
-module.exports = { Video }
+module.exports = {Video}

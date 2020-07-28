@@ -94,10 +94,19 @@ router.post("/uploadfiles", (req, res) => { //이거만해도됨
 router.post('/thumbnail', (req, res) => {
     let filePath = "";
     let fileDuration = ""
+
+    //썸네일가져오기 썸네일정보를 가져올수있다.
+    ffmpeg.ffprobe(req.body.url,function (err,metadata) {
+        console.dir(metadata)
+        console.log(metadata.format.duration)
+        fileDuration=metadata.format.duration
+    })
+
+//
     //썸네일생성
     ffmpeg(req.body.url)
         .on('filenames', function (filenames) { //이게 video/thumbnail/filenames 를생성하는거
-           console.log('Will generate'+filenames.join(', '))
+            console.log('Will generate' + filenames.join(', '))
             console.log(filenames)
             filePath = "uploads/thumbnails/" + filenames[0];
         })
@@ -109,10 +118,10 @@ router.post('/thumbnail', (req, res) => {
             return res.json({success: false, err})
         })
         .screenshots({
-            count:3,
-            folder:'uploads/thumbnails',
-            size:'320x240',
-            filename:'thumbnail-%b.png'
+            count: 3,
+            folder: 'uploads/thumbnails',
+            size: '320x240',
+            filename: 'thumbnail-%b.png'
         })
 
 
@@ -130,10 +139,8 @@ router.post("/uploadVideo", (req, res) => { //이거만해도됨
 
     //video.save()//몽고 db 메소드
     video.save((err, doc) => {
-
         if (err) return res.json({success: false, err})
         res.status(200).json({success: true})
-
     })
 })
 
@@ -143,9 +150,9 @@ router.post("/uploadVideo", (req, res) => { //이거만해도됨
 router.get('/getVideos', (req, res) => { //이거만해도됨
     //비디오를 db에서 가져와서 클라이언트에보냄
     Video.find() //모든비디오를가져옴 db에서
-        .populate('writer')
+        .populate('writer')     //POPULATE을해줘야 모든 정보를가져올수있따 Video에서 Schema.Types.ObjectId,
         .exec((err, videos) => {
-            if (err) return res.status(400).send(err)
+            if (err) return res.status(400).send(err);
             res.status(200).json({success: true, videos})
         })
 })

@@ -18,15 +18,11 @@ function LandingPage() {
 
 
     //db에서 가져오는  소스
-    useEffect(() => {
+    useEffect(() => {       //돔이 로드되자마자 무엇을 할지 정함  COMPONENTMOUNT랑비슷
         axios.get('/api/video/getVideos')
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data)
-
-
-
-
                     setVideo(response.data.videos)
                 } else {
                     alert("비디오 가져오기실패")
@@ -40,48 +36,45 @@ function LandingPage() {
 
         var minutes = Math.floor([video.duration] / 60)
         var seconds = Math.floor((video.duration - minutes * 60))
-
-        return <Col lg={6} md={8} xs={24}>
-            <a href={`/video/${video._id}`}>
-                <div style={{position: 'relative'}}>
-
-
-                    {/*<img style={{width: '100%'}} alt="thumbnail" src={`http://localhost:5000/${video.thumbnail}`}/>*/}
-                    {/*/!*원래는 위와같은형식으로 해야된다*!/*/}
-                    <img style={{width: '100%'}} alt="thumbnail" src=" https://i.pinimg.com/originals/b2/ab/5f/b2ab5f7368c36af2c000ebf94055efb0.jpg"/>
-
-
-
-                    <div className="duration">
-                        <span>{minutes}:{seconds}</span>
+        return (
+            <Col lg={6} md={8} xs={24}>
+                {/*전체가 24 사이즈 인데 미디움일떈 8 가장클떄는 1컬럼이 6 (4개가짐)*/}
+                <a href={`/video/post/${video._id}`}>
+                    <div style={{position: "relative"}}>
+                        <img style={{width: '100%'}} src={`http://localhost:5000/${video.thumbnail}`}/>
+                        <div className="duration">
+                            <span>{minutes} : {seconds}</span>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <br/>
-            <Meta
-                avatar={
-                    <Avatar src={video.writer.image}/>
-                }
-                title={video.title}
-                description=""
-            />
-            <span>{video.writer.name}</span>
-            <span style={{marginleft: '3rem'}}>{video.views} views</span>
-            - <span> {moment(video.createdAt).format("MMM Do YY")} </span>
-        </Col>
+                </a>
+                <br/>
+                <Meta
+                    avatar={
+                        <Avatar src={video.writer.image}/>
+                    }
+                    title={video.title}
+                    description=""
+                />
+
+
+
+                <span>{video.writer.name}</span><br/>
+                <span style={{marginLeft: '3rem'}}>{video.views} views</span>
+                - <span> {moment(video.createdAt).format("MMM Do YY")} </span>
+            </Col>
+
+        )
     })
+
 
     return (
         <div style={{width: '85%', margin: '3rem auto'}}>
             <Title level={2}>Recommend</Title>
             <hr/>
             <Row gutter={[32, 16]}>
-
                 {renderCard}
-
             </Row>
         </div>
-
     )
 }
 

@@ -60,10 +60,8 @@ function VideoUploadPage(props) {
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data)
-                    console.log(response.data.url)
-                    console.log(response.data.fileName)
-                    console.log("데이터들은정상작동!!!!!!!!!!!!!!")
 
+                    console.log("데이터들은정상작동!!!!!!!!!!!!!!")
 
                     let variable = {
                         url: response.data.url,
@@ -74,28 +72,12 @@ function VideoUploadPage(props) {
                     setFilePath(response.data.url)
 
 
-                    // Axios.post('/api/video/thumbnail', variable)
-                    //     .then(response => {
-                    //             if (response.data.success) {
-                    //                 console.log("작동X")
-                    //
-                    //                 setDuration(response.data.fileDuration)////
-                    //                 setThunmbnailPath(response.data.url)
-                    //                 //라우터를 만들어야한다 아래
-                    //                 console.log(response.data)
-                    //             } else {
-                    //                 alert("썸네일생성실패")
-                    //             }
-                    //         }
-                    //     )
-
-
                     Axios.post('/api/video/thumbnail', variable)
                         .then(response => {
                             if (response.data.success) {
                                 console.log("succsdfjsdhfkljd shdjdjsfk")
                                 console.log(response.data)
-
+                                console.log(response.data.fileDuration+"321312321")
                                 setDuration(response.data.fileDuration)////
                                 setThunmbnailPath(response.data.url)
                                 //라우터를 만들어야한다 아래
@@ -121,7 +103,7 @@ function VideoUploadPage(props) {
         e.preventDefault();//클릭하려했던걸들을 방지
 
         const variables = {
-            writer: user.userData._id,
+            writer: user.userData._id, //selector 를이용한 리덕스사용한거
             title: VideoTitle,
             description: Description,
             privacy: Private,
@@ -130,20 +112,16 @@ function VideoUploadPage(props) {
             duration: Duration,
             thumbnail: ThunmbnailPath
         }
-
         Axios.post('/api/video/uploadVideo', variables)
             .then(response => {  //req보내면 res을 받는다
                 if (response.data.success) {
-                    console.log(response.data)
+                    console.log("data업로드성공햿습니다!!!!!!!!!!!!!!!!!!!!!!")
+                     console.log(response.data)
                     message.success('성공적으로 업로드하였다')
-
                     setTimeout(() => {
-                        props.history.push('/')
-                    }, 1000)
-
-
+                         props.history.push('/')
+                     }, 1000)
                 } else {
-
                     alert("비 디 오 업 로 드 실 패")
                 }
             })  //이런형식의 axios를하고나선 라우터를 만들어야한다다
