@@ -77,7 +77,7 @@ function VideoUploadPage(props) {
                             if (response.data.success) {
                                 console.log("succsdfjsdhfkljd shdjdjsfk")
                                 console.log(response.data)
-                                console.log(response.data.fileDuration+"321312321")
+
                                 setDuration(response.data.fileDuration)////
                                 setThunmbnailPath(response.data.url)
                                 //라우터를 만들어야한다 아래

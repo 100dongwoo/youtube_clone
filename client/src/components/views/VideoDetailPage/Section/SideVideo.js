@@ -25,12 +25,11 @@ function SideVideo() {
         return (
             <div key={index} style={{display: 'flex', marginBottom: "1rem", padding: '0 2rem'}}>
                 <div style={{width: '40%', marginRight: '1rem'}}>
-                    <a href>
+                    <a href ={`/video/${video._id}`}>
                         <img style={{width: '100%', height: '100%'}}
                              src={`http://localhost:5000/${video.thumbnail}`}
                          //    src={"https://i.pinimg.com/originals/b2/ab/5f/b2ab5f7368c36af2c000ebf94055efb0.jpg"}
                              alt="썸네일"/>
-
                     </a>
                 </div>
                 {/*왼쪽부분*/}

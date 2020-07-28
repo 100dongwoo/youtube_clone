@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Row, Col, Avatar, List} from "antd"
 import Axios from "axios"
 import SideVideo from "./Section/SideVideo";
-
+import Subscribe from "./Section/Subscribe"
 function VideoDetailPage(props) {
 
     const videoId = props.match.params.videoId///URL 에서 가져옴
@@ -32,10 +32,13 @@ function VideoDetailPage(props) {
             <Row gutter={[16, 16]}>
                 <Col lg={18} xs={24}>
                     <div style={{width: '100%', padding: '3rem 4rem'}}>
-                        <video style={{width: '35%', height:'150%'}} src={`http://localhost:5000/${VideoDetail.filePath}`}
+                        <video style={{width: '100%', height:'100%'}} src={`http://localhost:5000/${VideoDetail.filePath}`}
                                controls/>
 
-                        <List.Item actions>
+                        <List.Item
+                            actions={[<Subscribe userTo={VideoDetail.writer._id}/>]}
+
+                        >
 
                             <List.Item.Meta
                                 avatar={<Avatar src={VideoDetail.writer.image}/>} //populate해서 가능합
