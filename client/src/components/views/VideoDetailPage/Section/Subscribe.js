@@ -12,18 +12,23 @@ function Subscribe(props) {
 
         let variable = {userTo: props.userTo} //videodetail테이블에서 바꿔주면된다
 
-        Axios('/api/subscribe/subcribeNumber', variable)
+        Axios.post('/api/subscribe/subscribeNumber', variable)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data)
+                    console.log("구독자수 받아왔다")
                     setSubscribeNumber(response.data.subscribeNumber)
                 } else {
                     alert("구독자수 정보 받아오기 실패")
                 }
             })
-        let subscribedVariable = {userTo: props.userTo, userFrom: localStorage.getItem('userId')}
 
-        Axios.post('/api/subscribe/subcribed', subscribedVariable)
+
+
+        let subscribedVariable = {
+            userTo: props.userTo,
+            userFrom: localStorage.getItem('userId')}
+
+        Axios.post('/api/subscribe/subscribed', subscribedVariable)
             .then(response => {
                 if (response.data.success) {
                     setSubscribed(response.data.subscribed)
@@ -34,16 +39,68 @@ function Subscribe(props) {
     }, [])
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+    const onSubscribe = () => {
+        let subscribedVariable = {
+            userTo: props.userTo,
+            userFrom: props.userFrom
+
+        }
+
+
+        if (Subscribed) {     //이미 구독중이라면
+            Axios.post('/api/subscribe/unSubscribe', subscribedVariable)
+                .then(response => {
+                    if (response.data.success) {
+                        console.log(response.data)
+                        setSubscribeNumber(SubscribeNumber - 1)
+                        setSubscribed(!Subscribed)
+
+                    } else {
+                        alert("구독취소하는데 실패패")
+                    }
+                })
+
+
+        } else //아직 구독중이 아니라면
+        {
+            Axios.post('/api/subscribe/subscribe', subscribedVariable)
+                .then(response => {
+                    if (response.data.success) {
+                        //console.log(response.data)
+                        setSubscribeNumber(SubscribeNumber+1)
+                        setSubscribed(!Subscribed)
+
+
+                    } else {
+                        alert("구독하는데 실패패")
+                    }
+                })
+        }
+    }
+
+
     return (
         <div>
             <button style={{
-                backgroundColor: `${Subscribe ? "#CC0000 " :  "#AAAAAA"}`, borderRadius: '4px',
+                backgroundColor: `${Subscribed ?"#AAAAAA": "#CC0000 " }`, borderRadius: '4px',
                 color: "white", padding: '10px 16px',
                 fontWeight: "500", fontSize: "1rem", textTransform: 'uppercase'
             }}
-                    onClick
+                    onClick={onSubscribe}
             >
-                {SubscribeNumber} {Subscribed?'Subscribed':'Subscribe'}
+                {SubscribeNumber} {Subscribed ? 'Subscribed' : 'Subscribe'}
             </button>
         </div>
     )
