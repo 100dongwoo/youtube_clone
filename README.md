@@ -27,19 +27,6 @@ npm install fluent-ffmpeg --save
 
 
 
-### Error not clear yet
-
-VideoUploadPage  약 70~ //되있는부분
-
-server/routes/video   /////되있는부분 
-
-썸네일관련 error
-
-so, We can not see Duration...
-
-VideoDetailPAGE ERR.... Video 
-
-
 
 You can watch the tutorial -> Click LINK!
 

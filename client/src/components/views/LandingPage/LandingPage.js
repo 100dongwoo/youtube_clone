@@ -37,16 +37,17 @@ function LandingPage() {
         var minutes = Math.floor([video.duration] / 60)
         var seconds = Math.floor((video.duration - minutes * 60))
         return (
-            <Col lg={6} md={8} xs={24}>
+            <Col key={index} lg={6} md={8} xs={24}>
                 {/*전체가 24 사이즈 인데 미디움일떈 8 가장클떄는 1컬럼이 6 (4개가짐)*/}
-                <a href={`/video/post/${video._id}`}>
-                    <div style={{position: "relative"}}>
+
+                <div  style={{position: "relative"}}>
+                    <a href={`/video/${video._id}`}>
                         <img style={{width: '100%'}} src={`http://localhost:5000/${video.thumbnail}`}/>
                         <div className="duration">
                             <span>{minutes} : {seconds}</span>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
                 <br/>
                 <Meta
                     avatar={
@@ -55,7 +56,6 @@ function LandingPage() {
                     title={video.title}
                     description=""
                 />
-
 
 
                 <span>{video.writer.name}</span><br/>

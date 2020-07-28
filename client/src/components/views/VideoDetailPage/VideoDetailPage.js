@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Row, Col, Avatar, List} from "antd"
 import Axios from "axios"
 import SideVideo from "./Section/SideVideo";
+
 function VideoDetailPage(props) {
 
     const videoId = props.match.params.videoId///URL 에서 가져옴
@@ -29,19 +30,15 @@ function VideoDetailPage(props) {
         console.log(VideoDetail)
         return (
             <Row gutter={[16, 16]}>
-                <Col lg={10} xs={24}>
-
+                <Col lg={18} xs={24}>
                     <div style={{width: '100%', padding: '3rem 4rem'}}>
-
-
-                        {/*비디오 eero*/}
-
-                        <video style={{width: '100%'}} src={`http://localhost:5000/${VideoDetail._id}`} controls/>
+                        <video style={{width: '35%', height:'150%'}} src={`http://localhost:5000/${VideoDetail.filePath}`}
+                               controls/>
 
                         <List.Item actions>
 
                             <List.Item.Meta
-                                avatar={<Avatar src={VideoDetail.writer.image}/>}
+                                avatar={<Avatar src={VideoDetail.writer.image}/>} //populate해서 가능합
                                 title={VideoDetail.writer.name}
                                 description={VideoDetail.description}
                             />
@@ -52,8 +49,7 @@ function VideoDetailPage(props) {
 
                 {/*사이드비디오*/}
                 <Col lg={6} xs={24}>
-                <SideVideo/>
-
+                   <SideVideo/>
                 </Col>
             </Row>
 
