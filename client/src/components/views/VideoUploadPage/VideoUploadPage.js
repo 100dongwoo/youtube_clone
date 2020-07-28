@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useLayoutEffect, useState} from "react";
 import {Typography, Button, Form, message, Input, Icon} from 'antd'
 import Dropzone from "react-dropzone";
 import Axios from "axios";
@@ -8,7 +8,6 @@ import {useSelector} from "react-redux"; //react-hook
 
 const {TextArea} = Input
 const {Title} = Typography;
-
 
 const PrivateOptions = [
     {value: 0, label: "private"},
@@ -61,6 +60,10 @@ function VideoUploadPage(props) {
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data)
+                    console.log(response.data.url)
+                    console.log(response.data.fileName)
+                    console.log("데이터들은정상작동!!!!!!!!!!!!!!")
+
 
                     let variable = {
                         url: response.data.url,
@@ -68,25 +71,41 @@ function VideoUploadPage(props) {
                     }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-                   setFilePath(response.data.url);
+                    setFilePath(response.data.url)
+
+
+                    // Axios.post('/api/video/thumbnail', variable)
+                    //     .then(response => {
+                    //             if (response.data.success) {
+                    //                 console.log("작동X")
+                    //
+                    //                 setDuration(response.data.fileDuration)////
+                    //                 setThunmbnailPath(response.data.url)
+                    //                 //라우터를 만들어야한다 아래
+                    //                 console.log(response.data)
+                    //             } else {
+                    //                 alert("썸네일생성실패")
+                    //             }
+                    //         }
+                    //     )
 
 
                     Axios.post('/api/video/thumbnail', variable)
-
                         .then(response => {
-                                if (response.data.success) {
+                            if (response.data.success) {
+                                console.log("succsdfjsdhfkljd shdjdjsfk")
+                                console.log(response.data)
 
-                                    console.log((response.data))
-                                    setDuration(response.data.fileDuration)////
-                                    setThunmbnailPath(response.data.url)
+                                setDuration(response.data.fileDuration)////
+                                setThunmbnailPath(response.data.url)
+                                //라우터를 만들어야한다 아래
+                                //succsee확인을 한후
+                                //state해야함
 
-                                    //라우터를 만들어야한다 아래
-                                    console.log(response.data)
-                                } else {
-                                    alert("썸네일생성실패")
-                                }
+                            } else {
+                                console.log("err")
                             }
-                        )
+                        })
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -106,10 +125,10 @@ function VideoUploadPage(props) {
             title: VideoTitle,
             description: Description,
             privacy: Private,
-             filePath: FilePath,
+            filePath: FilePath,
             category: Category,
-             duration: Duration,
-             thembnail: ThunmbnailPath
+            duration: Duration,
+            thumbnail: ThunmbnailPath
         }
 
         Axios.post('/api/video/uploadVideo', variables)
@@ -121,7 +140,6 @@ function VideoUploadPage(props) {
                     setTimeout(() => {
                         props.history.push('/')
                     }, 1000)
-
 
 
                 } else {
@@ -165,9 +183,9 @@ function VideoUploadPage(props) {
 
                     {/*썸네일 (Thumnail)*/}
 
-                 {ThunmbnailPath &&  //있을떄만 랜더링되라는뜻
+                    {ThunmbnailPath &&  //있을떄만 랜더링되라는뜻
                     <div>
-                        <img src={`http://localhost:5000/${ThunmbnailPath}`} alt="thumbnail"/>
+                        <img src={`http://localhost:5000/${ThunmbnailPath}`} alt="Thumnail"/>
                     </div>
 
                     }

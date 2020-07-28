@@ -43,6 +43,8 @@ VideoDetailPAGE ERR.... Video
 
 You can watch the tutorial -> Click LINK!
 
-###### Project_References : [LINK](https://www.youtube.com/channel/UCFyXA9x8lpL3EYWeYhj4C4Q?view_as=subscriber)
+###### Project_References 
+
+: [LINK](https://www.youtube.com/channel/UCFyXA9x8lpL3EYWeYhj4C4Q?view_as=subscriber)
 
 
