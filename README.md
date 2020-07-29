@@ -26,12 +26,9 @@ npm install fluent-ffmpeg --save
 
 ## Information
 
-Comment structure
+Comment Structure
 
-![Comment structure](./uploads/Comment List.png)
-
-
-
+![CommentStructure](./uploads/CommentList.png)
 
 
 You can watch the tutorial -> Click LINK!
