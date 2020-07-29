@@ -4,13 +4,14 @@ import Axios from "axios"
 import SideVideo from "./Section/SideVideo";
 import Comment from "./Section/Comment";
 import Subscribe from "./Section/Subscribe"
+
 function VideoDetailPage(props) {
 
     const videoId = props.match.params.videoId///URL 에서 가져옴
     const variable = {videoId: videoId}
 
     const [VideoDetail, setVideoDetail] = useState([]);
-
+    const [Comments, setComments] = useState([])
 
     useEffect(() => {
         Axios.post('/api/video/getVideoDetail', variable)
@@ -24,21 +25,43 @@ function VideoDetailPage(props) {
                     alert("비디오정보를 가져오기실패")
                 }
             })
+
+
+        //COMMENT기능에서 보내주기위함
+        Axios.post('/api/comment/getComments', variable)
+            .then(response => {
+                if (response.data.success) {
+                    //모든 커맨트정보를 받는다..
+                    console.log("commnet정보?!!!!!!!!!!!!!!!")
+                    console.log(response.data.comments)
+                    console.log("commnet정보?!!!!!!!!!!!!!!!")
+                    setComments(response.data.comments)
+                } else {
+                    alert("코멘트정보를 가져오기 싫패했습니다")
+                }
+            })
+
+
     }, [])
+
+    const refreshFunction = (newcomment) => {  //state 바꿔주는거
+        setComments(Comments.concat(newcomment)) //추가하는거
+    }
+
 
     if (VideoDetail.writer) {
 
 
-
-
         console.log(VideoDetail)
-        const subscribeButton=  VideoDetail.writer._id!==localStorage.getItem('userId') && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>
+        const subscribeButton = VideoDetail.writer._id !== localStorage.getItem('userId') &&
+            <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>
 
         return (
             <Row gutter={[16, 16]}>
                 <Col lg={18} xs={24}>
                     <div style={{width: '100%', padding: '3rem 4rem'}}>
-                        <video style={{width: '100%', height:'100%'}} src={`http://localhost:5000/${VideoDetail.filePath}`}
+                        <video style={{width: '100%', height: '100%'}}
+                               src={`http://localhost:5000/${VideoDetail.filePath}`}
                                controls/>
 
                         <List.Item
@@ -53,7 +76,7 @@ function VideoDetailPage(props) {
                             />
                         </List.Item>
 
-                        <Comment postId={videoId}/>
+                        <Comment refreshFunction={refreshFunction} commentList={Comments} postId={videoId}/>
                     </div>
                 </Col>
 

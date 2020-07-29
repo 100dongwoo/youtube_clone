@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import Axios from "axios";
+import SingleComment from "./SingleComment";
 
 function Comment(props) {
 
@@ -25,6 +26,10 @@ function Comment(props) {
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data.result)
+                    setCommentValue("")
+                    props.refreshFunction(response.data.result)
+
+
                 } else {
                     alert("커맨트저장에 실패했습니다.")
                 }
@@ -39,7 +44,21 @@ function Comment(props) {
             <p>Replies</p>
             <hr/>
 
+            {/*Comment list*/}
+            {props.commentList && props.commentList.map((comment,index)=>(
 
+                (!comment.responseTo && //댓글에 댓글 단것들을 줄이는역할을한다 조건을 줘서
+                    <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={videoId}/>
+                )
+
+
+
+            ))}
+
+
+
+
+            {/* 이밑에가 커맨트트*/}
             <form style={{display: 'flex'}} onSubmit={onSubmit}>
                     <textarea
                         style={{width: '100%', borderRadius: '5px'}}

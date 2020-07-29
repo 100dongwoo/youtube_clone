@@ -36,7 +36,7 @@ function SideVideo() {
 
 
                 <div style={{width: '50%'}}>
-                    <a href
+                    <a //href
                        style={{color: "gray"}}>
                         <span style={{fontSize: '1rem', color: 'black'}}> {video.Title}</span><br/>
                         <span>{video.writer.name}</span><br/>
