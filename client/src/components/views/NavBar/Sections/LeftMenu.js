@@ -13,7 +13,9 @@ function LeftMenu(props) {
             <Menu.Item key="subscription">
                 <a href="/subscription">Subscription</a>
             </Menu.Item>
-
+            <Menu.Item key="Upload">
+                <a href="/video/upload">Upload</a>
+            </Menu.Item>
 
         </Menu>
     )

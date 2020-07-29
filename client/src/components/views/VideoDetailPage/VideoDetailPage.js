@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Row, Col, Avatar, List} from "antd"
 import Axios from "axios"
 import SideVideo from "./Section/SideVideo";
+import Comment from "./Section/Comment";
 import Subscribe from "./Section/Subscribe"
 function VideoDetailPage(props) {
 
@@ -27,7 +28,12 @@ function VideoDetailPage(props) {
 
     if (VideoDetail.writer) {
 
+
+
+
         console.log(VideoDetail)
+        const subscribeButton=  VideoDetail.writer._id!==localStorage.getItem('userId') && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>
+
         return (
             <Row gutter={[16, 16]}>
                 <Col lg={18} xs={24}>
@@ -36,7 +42,7 @@ function VideoDetailPage(props) {
                                controls/>
 
                         <List.Item
-                            actions={[<Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>]}
+                            actions={[subscribeButton]}
 
                         >
 
@@ -46,13 +52,15 @@ function VideoDetailPage(props) {
                                 description={VideoDetail.description}
                             />
                         </List.Item>
+
+                        <Comment postId={videoId}/>
                     </div>
                 </Col>
 
 
                 {/*사이드비디오*/}
                 <Col lg={6} xs={24}>
-                   <SideVideo/>
+                    <SideVideo/>
                 </Col>
             </Row>
 

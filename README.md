@@ -24,6 +24,12 @@ ffmpeg - download --using Thumbnail
 npm install fluent-ffmpeg --save
 
 
+## Information
+
+Comment structure
+
+![Comment structure](./uploads/Comment List.png)
+
 
 
 
