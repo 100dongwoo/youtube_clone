@@ -8,6 +8,7 @@ import Subscribe from "./Section/Subscribe"
 function VideoDetailPage(props) {
 
     const videoId = props.match.params.videoId///URL 에서 가져옴
+
     const variable = {videoId: videoId}
 
     const [VideoDetail, setVideoDetail] = useState([]);
@@ -17,8 +18,6 @@ function VideoDetailPage(props) {
         Axios.post('/api/video/getVideoDetail', variable)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data)
-                    console.log("가져오기성공")
                     setVideoDetail(response.data.videoDetail)
 
                 } else {
@@ -32,9 +31,6 @@ function VideoDetailPage(props) {
             .then(response => {
                 if (response.data.success) {
                     //모든 커맨트정보를 받는다..
-                    console.log("commnet정보?!!!!!!!!!!!!!!!")
-                    console.log(response.data.comments)
-                    console.log("commnet정보?!!!!!!!!!!!!!!!")
                     setComments(response.data.comments)
                 } else {
                     alert("코멘트정보를 가져오기 싫패했습니다")
@@ -43,16 +39,17 @@ function VideoDetailPage(props) {
 
 
     }, [])
-
-    const refreshFunction = (newcomment) => {  //state 바꿔주는거
+//state 바꿔주는거
+    const refreshFunction = (newcomment) => {
+        console.log("리프레쉬 작동")
         setComments(Comments.concat(newcomment)) //추가하는거
+
     }
+
 
 
     if (VideoDetail.writer) {
 
-
-        console.log(VideoDetail)
         const subscribeButton = VideoDetail.writer._id !== localStorage.getItem('userId') &&
             <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>
 
@@ -76,7 +73,12 @@ function VideoDetailPage(props) {
                             />
                         </List.Item>
 
-                        <Comment refreshFunction={refreshFunction} commentList={Comments} postId={videoId}/>
+                        <Comment
+                            refreshFunction={refreshFunction}
+                            commentLists={Comments}
+                            postId={videoId}
+                        />
+
                     </div>
                 </Col>
 

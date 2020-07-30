@@ -2,11 +2,10 @@ import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import Axios from "axios";
 import SingleComment from "./SingleComment";
+import ReplyComment from "./ReplyComment"
 
 function Comment(props) {
-
-
-    const videoId = props.postId
+    const videoId = props.postId;
     const user = useSelector(state => state.user);//리덕스 훅ㅇㄹ사용함
     const [commentValue, setCommentValue] = useState("")
     const handleClick = (e) => {
@@ -25,17 +24,14 @@ function Comment(props) {
         Axios.post('/api/comment/saveComment', variable)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data.result)
-                    setCommentValue("")
-                    props.refreshFunction(response.data.result)
-
+                    setCommentValue("");
+                    props.refreshFunction(response.data.result);
 
                 } else {
                     alert("커맨트저장에 실패했습니다.")
                 }
-            })
-
-    }
+            });
+    };
 
 
     return (
@@ -45,17 +41,30 @@ function Comment(props) {
             <hr/>
 
             {/*Comment list*/}
-            {props.commentList && props.commentList.map((comment,index)=>(
 
-                (!comment.responseTo && //댓글에 댓글 단것들을 줄이는역할을한다 조건을 줘서
-                    <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={videoId}/>
+            {props.commentLists &&
+            props.commentLists.map(
+                (comment, index) =>
+                (!comment.responseTo &&  //이게없으면 그냥 전부 한줄에 다 뜸
+                //댓글에 댓글 단것들을 줄이는역할을한다 조건을 줘서
+                    <React.Fragment key={index}>
+                        <SingleComment
+                            refreshFunction={props.refreshFunction}
+                            key={index}
+                            comment={comment}
+                            postId={videoId}
+                        />
+                        <ReplyComment
+                            refreshFunction={props.refreshFunction}
+                            parentCommentId={comment._id}
+                            postId={videoId}
+                            commentLists={props.commentLists}
+                        />
+
+
+                    </React.Fragment>
                 )
-
-
-
-            ))}
-
-
+            )}
 
 
             {/* 이밑에가 커맨트트*/}
@@ -71,11 +80,7 @@ function Comment(props) {
                         onClick={onSubmit}
                 >Submit
                 </button>
-
-
             </form>
-
-
         </div>
     )
 }

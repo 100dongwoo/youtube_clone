@@ -6,20 +6,21 @@ import {useSelector} from "react-redux";
 function SingleComment(props) {
 
     const user = useSelector(state => state.user);//리덕스 훅ㅇㄹ사용함
-    const [openReply, setopenReply] = useState(false)
+    const [openReply, setOpenReply] = useState(false)
 
-    const onClickReplyopenReply = () => {
-        setopenReply(!openReply)
+    const onClickReplyOpenReply = () => {
+        setOpenReply(!openReply)
     }
 
+
     const actions = [
-        <span onClick={onClickReplyopenReply} key="comment-basic-reply-to">Reply to</span>
+        <span onClick={onClickReplyOpenReply} key="comment-basic-reply-to">Reply to</span>
     ]
 
     const [CommentValue, setCommentValue] = useState("")
 
-    const unhandlechange = (e) => {
-        setCommentValue(e.currentTarget.CommentValue)
+    const unHandleChange = (e) => {
+        setCommentValue(e.currentTarget.value)
     }
 
     const onSubmit = (e) => {
@@ -30,15 +31,16 @@ function SingleComment(props) {
             writer: user.userData._id,                     //localstorge가능
             postId: props.postId ,  //props가능 ,url에서가져오는것도가능능
             responseTo:props.comment._id
+
         }
 
         Axios.post('/api/comment/saveComment', variable)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data.result)
-                    setCommentValue("")
-                    props.refreshFunction(response.data.result)
-
+                    console.log("저장성공하였습니다.");
+                    setCommentValue("");
+                    setOpenReply(false);
+                    props.refreshFunction(response.data.result);
                 } else {
                     alert("커맨트저장에 실패했습니다.")
                 }
@@ -59,7 +61,7 @@ function SingleComment(props) {
             <form style={{display: 'flex'}} onSubmit={onSubmit}>
                     <textarea
                         style={{width: '100%', borderRadius: '5px'}}
-                        onChange={unhandlechange}
+                        onChange={unHandleChange}
                         value={CommentValue}
                         placeholder="코멘트작성해주세요"
                     />
@@ -75,3 +77,12 @@ function SingleComment(props) {
 
 
 export default SingleComment;
+
+
+
+
+
+
+
+
+

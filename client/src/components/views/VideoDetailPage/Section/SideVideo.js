@@ -9,8 +9,6 @@ function SideVideo() {
         axios.get('/api/video/getVideos')
             .then(response => {
                 if (response.data.success) {
-                    console.log("됬따")
-                    console.log(response.data.videos)
                     setsideVideos(response.data.videos)
                 } else {
                     alert("사이드비디오정보를 가져오기실패")

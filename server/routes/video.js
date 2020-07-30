@@ -98,8 +98,7 @@ router.post('/thumbnail', (req, res) => {
 
     //썸네일가져오기 썸네일정보를 가져올수있다.
     ffmpeg.ffprobe(req.body.url, function (err, metadata) {
-        console.dir(metadata)
-        console.log(metadata.format.duration)
+
         fileDuration = metadata.format.duration
     })
 
