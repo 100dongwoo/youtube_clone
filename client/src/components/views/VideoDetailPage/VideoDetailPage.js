@@ -4,7 +4,7 @@ import Axios from "axios"
 import SideVideo from "./Section/SideVideo";
 import Comment from "./Section/Comment";
 import Subscribe from "./Section/Subscribe"
-
+import LikeDislikes from "./Section/LikeDislikes";
 function VideoDetailPage(props) {
 
     const videoId = props.match.params.videoId///URL 에서 가져옴
@@ -27,7 +27,7 @@ function VideoDetailPage(props) {
 
 
         //COMMENT기능에서 보내주기위함
-        Axios.post('/api/comment/getComments', variable)
+        Axios.post("/api/comment/getComments", variable)
             .then(response => {
                 if (response.data.success) {
                     //모든 커맨트정보를 받는다..
@@ -62,7 +62,9 @@ function VideoDetailPage(props) {
                                controls/>
 
                         <List.Item
-                            actions={[subscribeButton]}
+                            actions={[<LikeDislikes video
+                                                    userId={localStorage.getItem('userId')}
+                                                    videoId={videoId}/>,subscribeButton]}
 
                         >
 

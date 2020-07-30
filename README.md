@@ -2,7 +2,9 @@ Boilerplate-mern-stack is being sponsored by the following tool <br />
 Please help to support us by taking a look and signing up to a free trial
 
 Hello, My Friends  
-Thank you for having interest in this repository ! 
+Thank you for having interest in this repository ! <br>
+ -> It's at the bottom(Link)
+
 
 To use this application, 
 
@@ -29,6 +31,21 @@ npm install fluent-ffmpeg --save
 Comment Structure
 
 ![CommentStructure](./uploads/CommentList.png)
+
+### Like & DisLike Structure
+(1)  Like & DisLike 모델을 만든다 (Make Model)
+-> Video like/DisLike
+-> Commment like/DisLike
+
+(2)  3가지 경우(Three Occation)
+
+1. 아직 아무것도 클릭 안 돼있을 때 (Nothing is clicked)
+
+2. 좋아요/싫어요 버튼이 이미 클릭이 돼있을 경우 한번더 누를떄
+(Button alreadly clicked-> press it once more)
+
+3. 이미 다른 버튼이 클릭되어 있을 경우 <br>
+already clicked another button
 
 
 You can watch the tutorial -> Click LINK!
